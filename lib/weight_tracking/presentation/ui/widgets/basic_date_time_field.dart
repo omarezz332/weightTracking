@@ -37,7 +37,8 @@ class BasicDateField extends StatelessWidget {
               );
             },
             onSaved: (value) {
-              onSave(value!.toString());
+              DateFormat dateFormat = DateFormat("MMMMEEEEd");
+              onSave(dateFormat.format(value!));
             },
           ),
         ],

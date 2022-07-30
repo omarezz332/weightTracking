@@ -60,22 +60,26 @@ class WeightApi implements IWeightApi {
       final Uri url = Uri.parse(kFirebaseUrl(token));
       log("getWeights : $url");
       final  response = await http.get(url);
-      final Map<String, dynamic> extractedData = json.decode(response.body);
-      extractedData.forEach((id, weightData) {
+      log("getWeights : ${response.body.toString()}");
+
+      if(response.body.isNotEmpty ) {
+        final Map<String, dynamic> extractedData = json.decode(response.body);
+        extractedData.forEach((id, weightData) {
           weights.add(Weight(
             id: id,
             weight: weightData['weight'],
             date: weightData['date'],
           ));
-
-      });
-      return weights;
+        });
+        return weights;
+      }
+      return [];
     } on SocketException {
       throw const HttpException('No Internet Connection');
     } on Exception {
       throw const HttpException('Something went wrong');
     } catch (e) {
-      throw e;
+      return [];
     }
   }
 

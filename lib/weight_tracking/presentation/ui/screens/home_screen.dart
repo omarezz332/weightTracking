@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../settings/generated/locale_keys.g.dart';
 import '../../../../settings/helpers/extensions.dart';
+import '../../../../settings/helpers/sized_boxes.dart';
 import '../../../../settings/helpers/ui_helpers.dart';
 import '../../../domain/core/weight.dart';
 import '../../provider/weight_provider/get_weights_notifier.dart';
@@ -85,12 +86,23 @@ Card  _weightItem(Weight weight) => Card(
     child: Column(
       children: [
         Text(
-          weight.weight.toString(),
-          style: context.textTheme.headline2,
+          "${weight.weight} KG",
+          style: context.textTheme.headline5?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        Text(
-          weight.date.toString(),
-          style: context.textTheme.headline2,
+        Row(
+
+          mainAxisAlignment: MainAxisAlignment.center ,
+          children: [
+
+            Icon(Icons.date_range),
+            kHorizontalSizedBoxSmall,
+            Text(
+              "${weight.date.toString()}",
+              style: context.textTheme.headline2,
+            ),
+          ],
         ),
 
       ],
