@@ -16,6 +16,7 @@ import '../../provider/weight_provider/authentication_notifier.dart';
 import '../../provider/weight_provider/get_weights_notifier.dart';
 import '../../provider/weight_provider/weight_state.dart';
 import '../../ui/dialogs/dialog_container.dart';
+import '../widgets/basic_date_time_field.dart';
 import '../widgets/custom_text_field.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -39,7 +40,10 @@ class _createPostDialog extends ConsumerState<CreateWeightDialog> {
                 child: Column(
                   children: [
                     TextFormField(
+
                       decoration: InputDecoration(
+                        hintText:"60 KG",
+
                         labelText: "Weight",
                         labelStyle: TextStyle(
                           color: Colors.black,
@@ -60,32 +64,15 @@ class _createPostDialog extends ConsumerState<CreateWeightDialog> {
                       validator: (value) => value!
                           .trim()
                           .validate([ validateRequired]),
+                      onSaved: (String? value) => ref
+                          .read(weightFieldProviderRef)
+                          .setWeight(value!),
                     ),
-
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Date",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: ScreenUtil().setSp(20),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            ScreenUtil().setSp(10),
-                          ),
-                        ),
-                      ),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: ScreenUtil().setSp(20),
-                      ),
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.done,
-                      validator: (value) => value!
-                          .trim()
-                          .validate([validateRequired]),
+                    BasicDateField(
+                      title: LocaleKeys.user_actions_preferred_date.tr(),
+                      onSave: (value) => ref.read(weightFieldProviderRef)
+                          .setDate(value),
                     ),
-
                     Row(
                       children: [
                         Expanded(
@@ -118,14 +105,15 @@ class _createPostDialog extends ConsumerState<CreateWeightDialog> {
                                 onPressed: () async {
                                   if (fieldProvider.validate()) {
                                      await ref.read(addWeightNotifierProvider.notifier).addWeight();
-                                        AutoRouter.of(context).pop();
-                                    }
+                                     await ref.read(getWeightNotifierProviderRef.notifier).getWeight();
 
+                                     AutoRouter.of(context).pop();
+                                    }
                                   },
                                 child: loading?SpinKitThreeBounce(
                                   color: context.theme.canvasColor,
                                   size: 20,
-                                ):Text(LocaleKeys.user_actions_publish.tr()),
+                                ):Text(LocaleKeys.user_actions_add_weight.tr()),
                               ),
                             );
                           },

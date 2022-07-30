@@ -33,12 +33,12 @@ class AddWeightnNotifier extends StateNotifier<WeightState> {
   Future<void> addWeight() async {
     state = const WeightLoading();
     try {
-
-      final response =
-          await _api.addWeight(_weightFieldProvider.weightClass, _tokenRepositoryProvider.token);
+      final response = await _api.addWeight(
+          _weightFieldProvider.weightClass, _tokenRepositoryProvider.token);
 
       state = WeightPost();
     } catch (e) {
+      state = WeightError();
       rethrow;
     }
   }

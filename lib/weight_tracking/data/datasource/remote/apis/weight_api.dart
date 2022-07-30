@@ -27,7 +27,9 @@ class WeightApi implements IWeightApi {
   Future<void> addWeight(Weight weight, String token) async {
     try {
       final url = Uri.parse(kFirebaseUrl(token));
+      log("addWeight : ${weight.toJson()}");
       final response = await http.post(url, body: json.encode(weight.toJson()));
+      log("addWeight : ${response.body.toString()}");
     } on SocketException {
       throw const HttpException('No Internet Connection');
     } on Exception {
@@ -56,9 +58,17 @@ class WeightApi implements IWeightApi {
     List<Weight> weights = [];
     try {
       final Uri url = Uri.parse(kFirebaseUrl(token));
-      final http.Response response = await http.get(url);
+      log("getWeights : $url");
+      final  response = await http.get(url);
       final Map<String, dynamic> extractedData = json.decode(response.body);
-      weights.add(Weight.fromJson(extractedData));
+      extractedData.forEach((id, weightData) {
+          weights.add(Weight(
+            id: id,
+            weight: weightData['weight'],
+            date: weightData['date'],
+          ));
+
+      });
       return weights;
     } on SocketException {
       throw const HttpException('No Internet Connection');

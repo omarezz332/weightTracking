@@ -14,9 +14,13 @@ class WeightLoading extends WeightState {
 }
 
 class GotWeight extends WeightState {
-  final Weight? weight;
-  const GotWeight(this.weight);
-}class WeightPost extends WeightState {
+  final List<Weight> weights;
+   GotWeight({this.weights = const []});
+}
+class WeightPost extends WeightState {
   const WeightPost();
 }
 
+class WeightError extends WeightState {
+  const WeightError();
+}

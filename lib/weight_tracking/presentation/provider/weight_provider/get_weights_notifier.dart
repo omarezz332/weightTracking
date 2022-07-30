@@ -7,6 +7,7 @@ import '../../../data/datasource/remote/interfaces/i_authentication_api.dart';
 import '../../../data/datasource/remote/interfaces/i_weight_api.dart';
 import '../../../domain/core/weight.dart';
 import '../fields_providers/register_field_provider.dart';
+import '../token_repository_provider.dart';
 
 final StateNotifierProvider<GetweightNotifier, WeightState> getWeightNotifierProviderRef =
     StateNotifierProvider<GetweightNotifier, WeightState>((
@@ -14,17 +15,23 @@ final StateNotifierProvider<GetweightNotifier, WeightState> getWeightNotifierPro
 ) {
   return GetweightNotifier(
     ref.read(weightApi),
-    ref.read(registerFieldProviderRef),
+    ref.read(tokenRepositoryProvider),
   );
 });
 
 class GetweightNotifier extends StateNotifier<WeightState> {
   final IWeightApi _api;
-  final RegisterFieldProvider _registerFieldProvider;
+  final TokenRepositoryProvider _tokenRepositoryProvider;
+  GetweightNotifier(this._api, this._tokenRepositoryProvider) : super(const WeightInitial());
 
-  GetweightNotifier(this._api, this._registerFieldProvider) : super(const WeightInitial());
+  Future<void> getWeight() async {
+    try{
+      state = const WeightLoading();
+      final response=   await _api.getWeights(_tokenRepositoryProvider.token);
+      state =  GotWeight( weights: response);
+    }on Exception{
+      state = const WeightError();
+    }
 
-  Future<List<Weight>> getWeight(String token) async {
-    return await _api.getWeights(token);
   }
 }

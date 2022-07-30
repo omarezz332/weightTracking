@@ -79,6 +79,8 @@ abstract class  LocaleKeys {
   static const user_actions_edit = 'user_actions.edit';
   static const user_actions_yes = 'user_actions.yes';
   static const user_actions_publish= 'user_actions.publish';
+  static const user_actions_add_weight ='user_actions.add_weight';
+
   static const user_actions_write_commint= 'user_actions.write_commint';
   static const user_actions_upload_image= 'user_actions.upload_image';
   static const user_actions_ignore= 'user_actions.ignore';
@@ -131,6 +133,7 @@ abstract class  LocaleKeys {
   static const user_actions_city = 'user_actions.city';
   static const user_actions_comment = 'user_actions.comment';
   static const user_actions_preferred_date = 'user_actions.preferred_date';
+  static const user_actions_date = 'user_actions.date';
   static const user_actions_add_wishlist = 'user_actions.add_wishlist';
   static const user_actions_location_event_name = 'user_actions.location_event_name';
   static const user_actions = 'user_actions';

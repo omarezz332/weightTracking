@@ -12,7 +12,7 @@ final Provider<WeightFieldProvider> weightFieldProviderRef =
 /// This is the provider for the login field.
 class WeightFieldProvider {
   /// This is the login request.
-  late Weight weightClass;
+  late Weight weightClass=Weight();
 
   /// This is the key for the form.
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
@@ -32,12 +32,12 @@ class WeightFieldProvider {
   }
 
   /// This is the function to set the weight.
-  void setWeight(double weight) {
+  void setWeight(String weight) {
     weightClass =weightClass.copyWith(weight: weight);
   }
 
   /// This is the function to set the password.
-  void setDate(DateTime date) {
+  void setDate(String date) {
     weightClass = weightClass.copyWith(date:date );
   }
 }
