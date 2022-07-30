@@ -45,6 +45,7 @@ dependencies:
   image_picker: ^0.8.5+3
   cached_network_image: ^3.2.0
   flutter_animator: ^3.2.2
+  datetime_picker_formfield: ^2.0.0
 
   #helpers
   auto_route: ^3.2.4

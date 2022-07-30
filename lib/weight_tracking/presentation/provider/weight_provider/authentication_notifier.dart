@@ -7,33 +7,35 @@ import '../../../data/datasource/remote/interfaces/i_authentication_api.dart';
 import '../../../data/datasource/remote/interfaces/i_weight_api.dart';
 import '../../../domain/core/weight.dart';
 import '../fields_providers/login_field_provider.dart';
+import '../fields_providers/weight_field_provider.dart';
 import '../token_repository_provider.dart';
 
-final authenticationNotifierProvider =
-    StateNotifierProvider<AuthenticationNotifier, WeightState>(
-  (ref) => AuthenticationNotifier(
+final addWeightNotifierProvider =
+    StateNotifierProvider<AddWeightnNotifier, WeightState>(
+  (ref) => AddWeightnNotifier(
     ref.read(weightApi),
-    ref.read(loginFieldProviderRef),
+    ref.read(weightFieldProviderRef),
     ref.read(tokenRepositoryProvider),
   ),
 );
 
-class AuthenticationNotifier extends StateNotifier<WeightState> {
+class AddWeightnNotifier extends StateNotifier<WeightState> {
   final IWeightApi _api;
-  final LoginFieldProvider _loginFieldProvider;
+  final WeightFieldProvider _weightFieldProvider;
   final TokenRepositoryProvider _tokenRepositoryProvider;
 
-  AuthenticationNotifier(
+  AddWeightnNotifier(
     this._api,
-    this._loginFieldProvider,
+    this._weightFieldProvider,
     this._tokenRepositoryProvider,
   ) : super(const WeightInitial());
 
-  Future<void> addWeight(Weight weight) async {
+  Future<void> addWeight() async {
     state = const WeightLoading();
     try {
+
       final response =
-          await _api.addWeight(weight, _tokenRepositoryProvider.token);
+          await _api.addWeight(_weightFieldProvider.weightClass, _tokenRepositoryProvider.token);
 
       state = WeightPost();
     } catch (e) {

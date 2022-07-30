@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
-
 class Weight {
   final String id;
   final double weight;
@@ -11,6 +8,16 @@ const  Weight({
     required this.weight,
     required this.date,
   });
+
+Weight copyWith({
+    String? id,
+    double? weight,
+    DateTime? date,
+  }) => Weight(
+      id: id ?? this.id,
+      weight: weight ?? this.weight,
+      date: date ?? this.date,
+    );
 
 factory Weight.fromJson(Map<String, dynamic> json) {
     return Weight(
