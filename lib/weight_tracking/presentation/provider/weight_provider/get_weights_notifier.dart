@@ -34,4 +34,8 @@ class GetweightNotifier extends StateNotifier<WeightState> {
     }
 
   }
+  Future<void> deleteWeight(String id) async {
+      await _api.deleteWeight(id,_tokenRepositoryProvider.token);
+  }
+
 }

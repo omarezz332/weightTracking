@@ -42,8 +42,9 @@ class WeightApi implements IWeightApi {
   @override
   Future<void> deleteWeight(String id, String token) async {
     try {
-      final url = Uri.parse(kFirebaseUrl(token));
-      final response = await http.delete(url, body: json.encode(id));
+      final url = Uri.parse(kDeleteWieghtUrl(id,token));
+      final response = await http.delete(url);
+      log("deleteWeight : ${response.body.toString()}");
     } on SocketException {
       throw const HttpException('No Internet Connection');
     } on Exception {
